@@ -1,0 +1,88 @@
+header {
+  position: fixed;
+  width: 100%;
+  background-color: $grey;
+  z-index: 1;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+}
+
+.left-gr {
+  display: flex;
+  align-items: center;
+}
+
+.logo-group {
+  display: flex;
+  align-items: bottom;
+  background-color: $darkblue;
+  padding: 0.3rem 1rem 0.3rem 0.7rem;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 100%;
+    border-left: 1.8rem solid $darkblue;
+    border-top: 2.1rem solid transparent;
+    border-bottom: 2.1rem solid transparent;
+  }
+  img {
+    width: 2.7rem;
+  }
+}
+
+h1 {
+  color: $darkblue;
+  margin-left: 3rem;
+  font-family: $bebas;
+  font-weight: 400;
+  span {
+    border-bottom: 2px solid $darkblue;
+  }
+}
+
+p.logo-text {
+  font-size: 2rem;
+  margin-left: 0.5rem;
+  font-family: $condiment;
+  font-weight: 400;
+  margin-top: 0.5rem;
+}
+
+.search-btn {
+  background-color: $darkblue;
+  width: 4rem;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 2.5rem;
+    padding: 0.2rem;
+  }
+}
+
+.meow-link {
+  display: flex;
+  align-items: center;
+  background-color: $darkblue;
+  text-decoration: none;
+
+  p {
+    font-family: $revalia;
+    margin-top: -1.2rem;
+    color: $grey;
+    text-decoration: none;
+    font-size: 2rem;
+    padding: 1rem;
+    transition: background-color 300ms ease;
+    &:active {
+      // background-color: $alert;
+    }
+  }
+}

@@ -1,0 +1,223 @@
+@import 'config';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: $grey;
+  display: flex;
+  flex-direction: column;
+  color: $grey;
+}
+
+@import 'head';
+
+// -------------------------------------------------------------------------------
+.center-content {
+  margin-top: 4rem;
+  flex: 1 0 auto;
+  display: flex;
+  width: 100%;
+}
+
+.left-pane {
+  flex: 2 0 0;
+  background-color: $blue;
+  h2 {
+    font-family: $bebas;
+    font-weight: 400;
+    color: $darkblue;
+    padding: 0.8rem 1rem 0.5rem;
+    border-bottom: 2px solid $grey;
+    span {
+      color: $grey;
+    }
+  }
+}
+
+.cards-holder {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem 1rem;
+  justify-items: center;
+}
+
+.card {
+  background-color: $darkblue;
+  position: relative;
+  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
+  border-radius: 10px;
+  border: 2px solid $grey;
+}
+
+.u-name {
+  font-family: $revalia;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.splitter {
+  display: flex;
+  img {
+    margin-top: 0.3rem;
+    border-radius: 10px;
+    border: 2px solid $grey;
+  }
+}
+
+.data-group {
+  margin-left: 0.5rem;
+}
+
+.label,
+.data {
+  font-family: $revalia;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  text-transform: uppercase;
+  color: $blue;
+}
+
+.data {
+  text-transform: capitalize;
+}
+
+// .svg-heart {
+//   width: 1.5rem;
+//   fill: $grey;
+//   text-align: center;
+//   display: block;
+//   position: absolute;
+//   right: 1rem;
+//   bottom: 1rem;
+// }
+
+// ----------------------------------------------------------
+.right-pane {
+  flex: 1 0 0;
+  background-color: $grey;
+  // min-width: 370px;
+}
+
+.search {
+  background-color: $darkblue;
+  display: flex;
+
+  label {
+    font-family: $bebas;
+    font-weight: 400;
+    font-size: 1.7rem;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    margin-top: 0.3rem;
+  }
+  input {
+    width: 100%;
+    background-color: $lightblue;
+    font-family: $bebas;
+    font-weight: 400;
+    font-size: 1.5rem;
+    text-indent: 0.5rem;
+    color: $darkblue;
+  }
+}
+
+.filter-sorting {
+  background-color: $darkblue;
+  padding: 1rem;
+  position: relative;
+}
+
+.filter-sorting-lable {
+  font-family: $bebas;
+  font-weight: 400;
+  font-size: 1.7rem;
+  position: absolute;
+  transform: rotateZ(-90deg);
+  margin-left: 0.2rem;
+  left: -6%;
+  top: 35%;
+  text-align: center;
+}
+
+.option-group {
+  display: flex;
+  margin-left: 2.5rem;
+}
+
+.option {
+  background-color: $darkblue;
+  border: 2px solid $grey;
+  font-family: $bebas;
+  font-weight: 400;
+  font-size: 1.7rem;
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 90px;
+  margin-right: 0.5rem;
+  &:last-child {
+    margin-right: 0;
+  }
+  p {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  button {
+    background-color: $lightblue;
+    display: block;
+    width: 100%;
+    color: $darkblue;
+    font-size: 1.5rem;
+    cursor: pointer;
+    &.active {
+      color: $grey;
+      background-color: $blue;
+    }
+  }
+}
+
+.reviews {
+  border: 3px solid $darkblue;
+  max-width: 17rem;
+  margin: 2rem auto 0;
+  border-radius: 10px;
+  overflow: hidden;
+  h2 {
+    font-family: $bebas;
+    font-weight: 400;
+    color: $grey;
+    background-color: $darkblue;
+    text-align: center;
+    font-size: 1.8rem;
+    padding: 0.5rem 0;
+  }
+  img {
+    width: 11rem;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    border: 6px solid $blue;
+    border-radius: 50%;
+  }
+  p {
+    color: $darkblue;
+    font-family: $revalia;
+    padding: 1rem;
+    text-align: center;
+    line-height: 1.3rem;
+  }
+}
+
+// -------------------------------------------------------------------------------
+@import 'foot';
+
+@media (hover: hover) and (pointer: fine) {
+  .meow-link:hover {
+    background-color: $blue;
+  }
+}
+
+@import 'responsive';

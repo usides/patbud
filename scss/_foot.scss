@@ -1,0 +1,24 @@
+footer {
+  flex-shrink: 0;
+
+  .container {
+    background-color: $darkblue;
+  }
+}
+
+.credits {
+  text-align: center;
+  padding: 0.5rem;
+  color: #fff;
+  font-size: 1.1rem;
+  width: 100%;
+  font-family: $bebas;
+  font-weight: 400;
+  a {
+    text-decoration: none;
+    color: inherit;
+    &:active {
+      color: $alert;
+    }
+  }
+}
