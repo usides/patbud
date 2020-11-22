@@ -9,11 +9,11 @@ const sortButtons = document.querySelectorAll('button[data-sort]');
 const filterButtons = document.querySelectorAll('button[data-filter]');
 const nameInput = document.getElementById('name-input');
 
-let humansOrigin;
+let humansOriginState;
 
 const currentState = {
   humans: undefined,
-  sort: undefined,
+  sort: 'a-z',
   filter: 'none',
   searchValue: '',
 };
@@ -21,7 +21,7 @@ const currentState = {
 const handleInput = function () {
   currentState.searchValue = this.value.toLowerCase();
   filterHumans(currentState.filter);
-  sortHumans(currentState.humans, currentState.sort);
+  sortHumans(currentState.sort);
   updateCards(currentState.humans);
 };
 
@@ -31,7 +31,7 @@ const handleOptionClick = function (e) {
   if (button.dataset.sort) {
     sortButtons.forEach((button) => button.classList.remove('active'));
     button.classList.add('active');
-    sortHumans(currentState.humans, button.dataset.sort);
+    sortHumans(button.dataset.sort);
   }
   if (button.dataset.filter) {
     if (currentState.filter === button.dataset.filter) {
@@ -42,13 +42,13 @@ const handleOptionClick = function (e) {
       button.classList.add('active');
       filterHumans(button.dataset.filter);
     }
-    sortHumans(currentState.humans, currentState.sort);
+    sortHumans(currentState.sort);
   }
   updateCards(currentState.humans);
 };
 
 const filterHumans = function (filterOption) {
-  const searchedName = humansOrigin.filter((elem) =>
+  const searchedName = humansOriginState.filter((elem) =>
     elem.name.first.toLowerCase().startsWith(currentState.searchValue),
   );
   if (filterOption === 'none') {
@@ -61,11 +61,10 @@ const filterHumans = function (filterOption) {
   currentState.filter = filterOption;
 };
 
-const sortHumans = function (arr, sortOption) {
-  const sortedArr = arr.slice();
+const sortHumans = function (sortOption) {
   switch (sortOption) {
     case 'a-z':
-      sortedArr.sort((a, b) => {
+      currentState.humans.sort((a, b) => {
         return a.name.first.toLowerCase() >= b.name.first.toLowerCase()
           ? 1
           : -1;
@@ -73,7 +72,7 @@ const sortHumans = function (arr, sortOption) {
       break;
 
     case 'z-a':
-      sortedArr.sort((a, b) => {
+      currentState.humans.sort((a, b) => {
         return a.name.first.toLowerCase() <= b.name.first.toLowerCase()
           ? 1
           : -1;
@@ -81,19 +80,18 @@ const sortHumans = function (arr, sortOption) {
       break;
 
     case 'young':
-      sortedArr.sort((a, b) => {
+      currentState.humans.sort((a, b) => {
         return a.dob.age > b.dob.age ? 1 : -1;
       });
       break;
 
     case 'old':
-      sortedArr.sort((a, b) => {
+      currentState.humans.sort((a, b) => {
         return a.dob.age < b.dob.age ? 1 : -1;
       });
       break;
   }
 
-  currentState.humans = sortedArr;
   currentState.sort = sortOption;
 };
 
@@ -124,13 +122,14 @@ const getHumans = function () {
   return fetch(HUMANS_LINK)
     .then((res) => res.json())
     .then((data) => {
-      humansOrigin = data.results;
+      humansOriginState = data.results;
+      currentState.humans = data.results;
     });
 };
 
 const init = async () => {
   await getHumans();
-  sortHumans(humansOrigin, 'a-z');
+  sortHumans(currentState.sort);
   updateCards(currentState.humans);
 
   searchBtn.addEventListener('click', function () {

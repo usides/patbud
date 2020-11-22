@@ -1,9 +1,10 @@
 header {
   position: fixed;
   width: 100%;
-  background-color: $grey;
+
   z-index: 1;
   .container {
+    background-color: $grey;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
@@ -81,8 +82,5 @@ p.logo-text {
     font-size: 2rem;
     padding: 1rem;
     transition: background-color 300ms ease;
-    &:active {
-      // background-color: $alert;
-    }
   }
 }
