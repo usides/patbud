@@ -67,34 +67,26 @@ const filterHumans = function (filterOption) {
   currentState.filter = filterOption;
 };
 
+const sortByAge = (a, b) => (a.dob.age <= b.dob.age ? 1 : -1);
+const sortByName = (a, b) =>
+  a.name.first.toLowerCase() >= b.name.first.toLowerCase() ? 1 : -1;
+
 const sortHumans = function (sortOption) {
   switch (sortOption) {
     case 'a-z':
-      currentState.humans.sort((a, b) => {
-        return a.name.first.toLowerCase() >= b.name.first.toLowerCase()
-          ? 1
-          : -1;
-      });
+      currentState.humans.sort((a, b) => sortByName(a, b));
       break;
 
     case 'z-a':
-      currentState.humans.sort((a, b) => {
-        return a.name.first.toLowerCase() <= b.name.first.toLowerCase()
-          ? 1
-          : -1;
-      });
+      currentState.humans.sort((a, b) => sortByName(b, a));
       break;
 
     case 'young':
-      currentState.humans.sort((a, b) => {
-        return a.dob.age > b.dob.age ? 1 : -1;
-      });
+      currentState.humans.sort((a, b) => sortByAge(b, a));
       break;
 
     case 'old':
-      currentState.humans.sort((a, b) => {
-        return a.dob.age < b.dob.age ? 1 : -1;
-      });
+      currentState.humans.sort((a, b) => sortByAge(a, b));
       break;
   }
 
