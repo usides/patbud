@@ -41,6 +41,50 @@ body {
   }
 }
 
+.error-notice {
+  font-family: $revalia;
+  line-height: 1.3rem;
+  color: $alert;
+  text-align: center;
+  // margin-top: 1rem;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  margin: 0 auto;
+  animation: loader 1.5s linear infinite;
+  margin-top: 3rem;
+  &.hide {
+    display: none;
+  }
+  div {
+    position: absolute;
+    border: 8px solid transparent;
+    border-top-color: $darkblue;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    &:nth-child(2) {
+      border-color: transparent;
+      border-bottom-color: $darkblue;
+    }
+  }
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .cards-holder {
   padding: 1rem;
   display: grid;
