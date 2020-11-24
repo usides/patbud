@@ -1,52 +1,66 @@
 const HUMANS_LINK =
   'https://randomuser.me/api/?nat=us&results=36&inc=gender,name,picture,dob&seed=06b64d62bc01d624a';
+const OK_STATUS = 200;
+const DEBOUNCE_DELAY = 500;
 
 const searchBtn = document.getElementById('search-btn');
 const rightPane = document.getElementById('right-pane');
 const cardsHolder = document.getElementById('cards-holder');
 const optionGroup = document.getElementById('option-group');
-const sortButtons = document.querySelectorAll('button[data-sort]');
 const filterButtons = document.querySelectorAll('button[data-filter]');
 const nameInput = document.getElementById('name-input');
 const errorNotice = document.getElementById('error-notice');
 const loader = document.getElementById('loader');
 
 let humansOriginState;
+const noFilter = 'none';
 
 const currentState = {
   humans: undefined,
   sort: 'a-z',
-  filter: 'none',
+  filter: noFilter,
   searchValue: '',
 };
 
-const handleSearcBtn = function () {
+const handleSearchButton = function () {
   rightPane.classList.toggle('visible');
 };
 
+let timer;
 const handleInput = function () {
-  currentState.searchValue = this.value.toLowerCase();
-  filterHumans(currentState.filter);
-  sortHumans(currentState.sort);
-  updateCards(currentState.humans);
+  if (timer) clearTimeout(timer);
+  timer = setTimeout(() => {
+    currentState.searchValue = this.value.toLowerCase();
+    filterHumans(currentState.filter);
+    sortHumans(currentState.sort);
+    updateCards(currentState.humans);
+    timer = null;
+  }, DEBOUNCE_DELAY);
 };
 
-const handleOptionClick = function (e) {
-  const button = e.target.closest('button');
+const handleOptionClick = function ({ target }) {
+  const button = target.closest('button');
   if (!button) return;
-  if (button.dataset.sort) {
-    sortButtons.forEach((button) => button.classList.remove('active'));
+  const { dataset } = button;
+  if (dataset.sort) {
+    const prevActiveSortBtn = document.querySelector(
+      'button[data-sort].active',
+    );
+    prevActiveSortBtn.classList.remove('active');
     button.classList.add('active');
-    sortHumans(button.dataset.sort);
+    sortHumans(dataset.sort);
   }
-  if (button.dataset.filter) {
-    if (currentState.filter === button.dataset.filter) {
+  if (dataset.filter) {
+    if (currentState.filter === dataset.filter) {
       button.classList.toggle('active');
-      filterHumans('none');
+      filterHumans(noFilter);
     } else {
-      filterButtons.forEach((button) => button.classList.remove('active'));
+      const prevActiveFilterBtn = document.querySelector(
+        'button[data-filter].active',
+      );
+      if (prevActiveFilterBtn) prevActiveFilterBtn.classList.remove('active');
       button.classList.add('active');
-      filterHumans(button.dataset.filter);
+      filterHumans(dataset.filter);
     }
     sortHumans(currentState.sort);
   }
@@ -54,16 +68,13 @@ const handleOptionClick = function (e) {
 };
 
 const filterHumans = function (filterOption) {
-  const searchedName = humansOriginState.filter((elem) =>
+  const humansFilteredByName = humansOriginState.filter((elem) =>
     elem.name.first.toLowerCase().startsWith(currentState.searchValue),
   );
-  if (filterOption === 'none') {
-    currentState.humans = searchedName;
-  } else {
-    currentState.humans = searchedName.filter(
-      (elem) => elem.gender === filterOption,
-    );
-  }
+  currentState.humans =
+    filterOption === noFilter
+      ? humansFilteredByName
+      : humansFilteredByName.filter(({ gender }) => gender === filterOption);
   currentState.filter = filterOption;
 };
 
@@ -96,18 +107,18 @@ const sortHumans = function (sortOption) {
 const updateCards = function (arr) {
   cardsHolder.innerHTML = '';
   const fragment = document.createDocumentFragment();
-  arr.forEach((elem) => {
+  arr.forEach(({ name, picture, dob, gender }) => {
     const newElem = document.createElement('div');
     newElem.classList.add('card');
     const template = `
-    <p class="u-name">${elem.name.first} ${elem.name.last}</p>
+    <p class="u-name">${name.first} ${name.last}</p>
     <div class="splitter">
-      <img src="${elem.picture.large}" alt="User Photo">
+      <img src="${picture.large}" alt="User Photo">
       <div class="data-group">
         <p class="label">Age</p>
-        <p class="data">${elem.dob.age}</p>
+        <p class="data">${dob.age}</p>
         <p class="label">Gender</p>
-        <p class="data">${elem.gender}</p>
+        <p class="data">${gender}</p>
       </div>
     </div>`;
     newElem.innerHTML = template;
@@ -119,14 +130,14 @@ const updateCards = function (arr) {
 const getHumans = function () {
   return fetch(HUMANS_LINK)
     .then((res) => {
-      if (res.status !== 200) {
+      if (res.status !== OK_STATUS) {
         throw new Error(`Couldn't fetch data. ${res.status}`);
       }
       return res.json();
     })
-    .then((data) => {
-      humansOriginState = data.results;
-      currentState.humans = data.results;
+    .then(({ results }) => {
+      humansOriginState = results;
+      currentState.humans = results;
       loader.classList.add('hide');
     })
     .catch((err) => {
@@ -139,7 +150,7 @@ const init = async () => {
   sortHumans(currentState.sort);
   updateCards(currentState.humans);
 
-  searchBtn.addEventListener('click', handleSearcBtn);
+  searchBtn.addEventListener('click', handleSearchButton);
 
   optionGroup.addEventListener('click', handleOptionClick);
 
