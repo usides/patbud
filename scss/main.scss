@@ -257,7 +257,7 @@ body {
     background-color: $blue;
   }
 
-  .credits {
+  .credits, .description {
     a {
       &:hover {
         color: $blue;

@@ -6,7 +6,7 @@ footer {
   }
 }
 
-.credits {
+.credits, .description {
   text-align: center;
   padding: 0.5rem;
   color: #fff;
@@ -20,5 +20,11 @@ footer {
     &:active {
       color: $alert;
     }
+  }
+}
+
+.description {
+  a {
+    text-decoration: underline;
   }
 }
