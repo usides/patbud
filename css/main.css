@@ -437,7 +437,7 @@ footer .container {
   background-color: #1f4e5f;
 }
 
-.credits {
+.credits, .description {
   text-align: center;
   padding: 0.5rem;
   color: #fff;
@@ -447,20 +447,24 @@ footer .container {
   font-weight: 400;
 }
 
-.credits a {
+.credits a, .description a {
   text-decoration: none;
   color: inherit;
 }
 
-.credits a:active {
+.credits a:active, .description a:active {
   color: #c40000;
+}
+
+.description a {
+  text-decoration: underline;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .meow-link:hover {
     background-color: #79a8a9;
   }
-  .credits a:hover {
+  .credits a:hover, .description a:hover {
     color: #79a8a9;
   }
 }
